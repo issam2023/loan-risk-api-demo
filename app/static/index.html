@@ -3,515 +3,1632 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Loan Default Risk Predictor | Abdelhafid Masmi</title>
 
 <style>
 :root {
-    --navy: #102a43;
-    --blue: #1f5f99;
-    --blue2: #2d7fc1;
-    --bg: #f4f7fb;
-    --text: #172033;
-    --muted: #667085;
-    --border: #d7e0ea;
-    --green: #16845b;
-    --red: #c0392b;
+    --navy:#0b334b;
+    --navy-dark:#08283c;
+    --navy-card:#123f5b;
+    --teal:#16838b;
+    --teal-dark:#126e75;
+    --cyan:#19b8d2;
+    --red:#d5223b;
+
+    --page:#d5e3e8;
+    --panel:#9fbdc8;
+    --card:#b9d1d9;
+    --input:#d7e5e9;
+
+    --dark-text:#102a3a;
+    --muted:#496776;
+    --white:#ffffff;
 }
 
-* { box-sizing: border-box; }
+* {
+    box-sizing:border-box;
+}
+
+html {
+    scroll-behavior:smooth;
+}
 
 body {
-    margin: 0;
-    font-family: Inter, "Segoe UI", Arial, sans-serif;
-    background:
-        radial-gradient(circle at top right, #dbeafe 0, transparent 30%),
-        var(--bg);
-    color: var(--text);
-    min-height: 100vh;
+    margin:0;
+    min-height:100vh;
+    font-family:Inter,"Segoe UI",Arial,sans-serif;
+    background:var(--page);
+    color:var(--dark-text);
 }
+
+/* =========================================================
+   HERO
+   ========================================================= */
 
 .hero {
-    background: linear-gradient(125deg, var(--navy), var(--blue));
-    color: white;
-    padding: 42px 20px 54px;
+    background:
+        linear-gradient(
+            120deg,
+            #082b43 0%,
+            #0b3d58 55%,
+            #0d5364 100%
+        );
+
+    color:white;
+    text-align:center;
+
+    padding:32px 20px 34px;
 }
 
-.hero-inner {
-    max-width: 980px;
-    margin: auto;
-}
+.vanier {
+    display:inline-block;
 
-.badge {
-    display: inline-block;
-    padding: 7px 12px;
-    border: 1px solid rgba(255,255,255,.35);
-    border-radius: 999px;
-    background: rgba(255,255,255,.10);
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 18px;
+    background:linear-gradient(
+        135deg,
+        #ef334d,
+        #c91832
+    );
+
+    color:#ffffff;
+
+    padding:13px 42px;
+
+    border-radius:7px;
+
+    font-size:23px;
+    font-weight:900;
+    letter-spacing:3px;
+
+    box-shadow:
+        0 7px 18px rgba(0,0,0,.18);
+
+    margin-bottom:20px;
 }
 
 .hero h1 {
-    font-size: clamp(32px, 5vw, 48px);
-    margin: 0 0 10px;
-    letter-spacing: -1px;
-}
+    margin:0;
 
-.hero h2 {
-    margin: 0 0 10px;
-    font-size: 20px;
-    font-weight: 500;
-    opacity: .95;
-}
+    color:#ffffff;
 
-.author {
-    font-size: 16px;
-    opacity: .85;
-}
+    font-size:clamp(39px,5vw,58px);
+    line-height:1.08;
 
-.container {
-    max-width: 980px;
-    margin: -28px auto 35px;
-    padding: 0 20px;
-}
-
-.card {
-    background: white;
-    border: 1px solid rgba(215,224,234,.8);
-    border-radius: 18px;
-    padding: 30px;
-    box-shadow: 0 15px 40px rgba(16,42,67,.10);
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px;
-    margin-bottom: 25px;
-}
-
-.card h3 {
-    font-size: 25px;
-    margin: 0 0 7px;
+    font-weight:900;
+    letter-spacing:-1.4px;
 }
 
 .subtitle {
-    margin: 0;
-    color: var(--muted);
-    line-height: 1.5;
+    margin-top:13px;
+
+    color:#25c2da;
+
+    font-size:22px;
+    font-weight:700;
 }
 
-.tech {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    justify-content: flex-end;
+.hero-divider {
+    width:90px;
+    height:3px;
+
+    margin:20px auto 17px;
+
+    border-radius:10px;
+
+    background:#22b9ce;
 }
 
-.tech span {
-    background: #eef5fb;
-    border: 1px solid #d8e7f5;
-    color: #285f8f;
-    padding: 6px 9px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 700;
+.student {
+    color:#d7e6ec;
+
+    font-size:18px;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 19px 22px;
+.student strong {
+    color:#ffffff;
+
+    font-size:20px;
+    font-weight:850;
+}
+
+.program {
+    margin-top:6px;
+
+    color:#bfd3dc;
+
+    font-size:16px;
+    font-weight:500;
+}
+
+.program strong {
+    color:#ffffff;
+    font-weight:750;
+}
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+main {
+    width:min(1280px,calc(100% - 34px));
+
+    margin:0 auto;
+
+    padding:28px 0 45px;
+}
+
+/* =========================================================
+   MODEL OVERVIEW
+   ========================================================= */
+
+.overview {
+    display:grid;
+
+    grid-template-columns:1.55fr 1fr;
+
+    gap:14px;
+
+    margin-bottom:18px;
+}
+
+.overview-main {
+    min-height:145px;
+
+    display:flex;
+    align-items:center;
+
+    gap:22px;
+
+    padding:27px;
+
+    background:#123f5b;
+
+    border:1px solid #34758a;
+    border-left:5px solid var(--teal);
+
+    border-radius:14px;
+
+    box-shadow:
+        0 8px 20px rgba(8,38,61,.12);
+}
+
+.overview-icon {
+    flex:0 0 65px;
+
+    width:65px;
+    height:65px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:var(--teal);
+
+    color:white;
+}
+
+.overview-icon svg {
+    width:34px;
+    height:34px;
+}
+
+.overview-main h2 {
+    margin:0 0 8px;
+
+    color:white;
+
+    font-size:27px;
+}
+
+.overview-main p {
+    margin:0;
+
+    color:#c8dce4;
+
+    font-size:14px;
+    line-height:1.55;
+
+    max-width:700px;
+}
+
+/* =========================================================
+   MODEL CARDS
+   ========================================================= */
+
+.model-grid {
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+}
+
+.model-card {
+    min-height:67px;
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    padding:14px 16px;
+
+    background:#174d67;
+
+    border:1px solid #34758a;
+
+    border-radius:11px;
+}
+
+.model-icon {
+    width:31px;
+    height:31px;
+
+    flex:0 0 31px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#62c9ce;
+}
+
+.model-icon svg {
+    width:26px;
+    height:26px;
+}
+
+.model-card span {
+    display:block;
+
+    color:#8fc6cf;
+
+    font-size:9px;
+    font-weight:850;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+}
+
+.model-card strong {
+    display:block;
+
+    margin-top:4px;
+
+    color:white;
+
+    font-size:14px;
+}
+
+/* =========================================================
+   APPLICANT PANEL
+   ========================================================= */
+
+.panel {
+    padding:23px;
+
+    background:var(--panel);
+
+    border:1px solid #799eac;
+
+    border-radius:15px;
+
+    box-shadow:
+        0 10px 25px rgba(8,38,61,.13);
+}
+
+.section-header {
+    display:flex;
+    align-items:center;
+
+    gap:14px;
+
+    margin-bottom:18px;
+}
+
+.section-number {
+    width:44px;
+    height:44px;
+
+    flex:0 0 44px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:var(--teal);
+
+    color:white;
+
+    border-radius:9px;
+
+    font-size:20px;
+    font-weight:900;
+}
+
+.section-header h2 {
+    margin:0;
+
+    color:var(--dark-text);
+
+    font-size:27px;
+    font-weight:850;
+}
+
+.section-header p {
+    margin:2px 0 0;
+
+    color:#355565;
+
+    font-size:13px;
+    font-weight:500;
+}
+
+/* =========================================================
+   INPUT CARDS
+   ========================================================= */
+
+.fields {
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:13px;
+}
+
+.field {
+    min-height:105px;
+
+    display:grid;
+
+    grid-template-columns:58px 1fr;
+    grid-template-rows:auto 1fr;
+
+    column-gap:14px;
+
+    padding:13px 14px;
+
+    background:var(--card);
+
+    border:1px solid #88aab6;
+
+    border-radius:11px;
+}
+
+.field-icon {
+    grid-row:1 / 3;
+
+    align-self:center;
+
+    width:58px;
+    height:58px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:var(--teal);
+
+    color:white;
+
+    border-radius:10px;
+}
+
+.field-icon svg {
+    width:30px;
+    height:30px;
+
+    stroke-width:2;
 }
 
 .field label {
-    display: block;
-    font-weight: 650;
-    margin-bottom: 8px;
-    font-size: 14px;
+    align-self:end;
+
+    margin-bottom:6px;
+
+    color:#102a3a;
+
+    font-size:14px;
+    font-weight:800;
 }
 
 .field small {
-    color: var(--muted);
+    color:#496776;
+
+    font-size:11px;
+    font-weight:600;
 }
 
-input, select {
-    width: 100%;
-    padding: 13px 14px;
-    border: 1px solid var(--border);
-    border-radius: 9px;
-    background: white;
-    color: var(--text);
-    font-size: 15px;
-    outline: none;
-    transition: .2s;
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+input,
+select {
+    width:100%;
+    height:43px;
+
+    padding:0 12px;
+
+    background:var(--input);
+
+    color:#101820;
+
+    border:1px solid #688b99;
+
+    border-radius:7px;
+
+    outline:none;
+
+    font-size:16px;
+    font-weight:700;
+
+    box-shadow:none;
 }
 
-input:focus, select:focus {
-    border-color: var(--blue2);
-    box-shadow: 0 0 0 3px rgba(45,127,193,.12);
+input:focus,
+select:focus {
+    background:#e0ebee;
+
+    color:#000000;
+
+    border-color:var(--teal);
+
+    box-shadow:
+        0 0 0 2px rgba(22,131,139,.16);
 }
 
-button {
-    width: 100%;
-    border: none;
-    border-radius: 10px;
-    padding: 15px;
-    margin-top: 25px;
-    font-size: 16px;
-    font-weight: 700;
-    color: white;
-    background: linear-gradient(90deg, var(--navy), var(--blue));
-    cursor: pointer;
-    transition: transform .15s, box-shadow .15s;
+select option {
+    background:var(--input);
+
+    color:#101820;
+
+    font-weight:700;
 }
 
-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 7px 18px rgba(31,95,153,.25);
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.predict {
+    width:100%;
+    height:57px;
+
+    margin-top:17px;
+
+    background:var(--teal);
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    font-size:17px;
+    font-weight:850;
+
+    cursor:pointer;
+
+    transition:
+        background .15s ease,
+        transform .15s ease;
 }
 
-button:disabled {
-    opacity: .65;
-    cursor: wait;
+.predict:hover {
+    background:var(--teal-dark);
+
+    transform:translateY(-1px);
 }
 
-#result {
-    display: none;
-    margin-top: 25px;
-    border-radius: 13px;
-    padding: 22px;
-    border: 1px solid var(--border);
-    background: #f8fafc;
+.predict:disabled {
+    opacity:.65;
+    cursor:wait;
 }
 
-.result-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 17px;
+/* =========================================================
+   RESULTS
+   ========================================================= */
+
+#resultSection {
+    display:none;
 }
 
-.risk {
-    font-size: 26px;
-    font-weight: 800;
+.result-panel {
+    margin-top:17px;
+
+    padding:22px;
+
+    background:var(--navy-card);
+
+    border:1px solid #34758a;
+
+    border-radius:15px;
+
+    box-shadow:
+        0 10px 25px rgba(8,38,61,.15);
 }
 
-.low { color: var(--green); }
-.high { color: var(--red); }
+.result-panel .section-header h2 {
+    color:white;
+}
 
-.probability {
-    font-size: 28px;
-    font-weight: 800;
+.result-panel .section-header p {
+    color:#c3d6df;
 }
 
 .result-grid {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 12px;
+    display:grid;
+
+    grid-template-columns:
+        1.1fr
+        1.1fr
+        1fr
+        .8fr
+        1.4fr;
+
+    overflow:hidden;
+
+    background:#173f55;
+
+    border:1px solid #47798a;
+
+    border-radius:10px;
 }
 
-.metric {
-    padding: 13px;
-    background: white;
-    border: 1px solid #e5eaf0;
-    border-radius: 9px;
+.result-cell {
+    min-height:110px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    padding:18px;
+
+    border-right:1px solid #477183;
 }
 
-.metric-label {
-    display: block;
-    color: var(--muted);
-    font-size: 12px;
-    margin-bottom: 5px;
+.result-cell:last-child {
+    border-right:none;
 }
 
-.metric-value {
-    font-weight: 650;
-    overflow-wrap: anywhere;
+.result-label {
+    color:#72d2d5;
+
+    font-size:10px;
+    font-weight:850;
+
+    letter-spacing:.8px;
+
+    text-transform:uppercase;
 }
 
-.notice {
-    margin-top: 17px;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.5;
+#risk {
+    margin-top:7px;
+
+    font-size:27px;
+    font-weight:900;
+}
+
+.low-risk {
+    color:#51e2a0;
+}
+
+.high-risk {
+    color:#ff8178;
+}
+
+#probability {
+    margin-top:5px;
+
+    color:white;
+
+    font-size:35px;
+    font-weight:900;
+}
+
+.result-value {
+    margin-top:7px;
+
+    color:white;
+
+    font-size:16px;
+    font-weight:800;
+}
+
+.request {
+    margin-top:7px;
+
+    color:#e2eef2;
+
+    font-size:10px;
+    font-weight:600;
+
+    overflow-wrap:anywhere;
+}
+
+.message {
+    margin:14px 2px 0;
+
+    color:#d4e4ea;
+
+    font-size:12px;
+    font-weight:500;
+}
+
+/* =========================================================
+   TECHNICAL RESOURCES
+   ========================================================= */
+
+.technical {
+    margin-top:17px;
+
+    padding:18px;
+
+    text-align:center;
+
+    background:var(--panel);
+
+    border:1px solid #799eac;
+
+    border-radius:13px;
+}
+
+.technical-title {
+    margin-bottom:11px;
+
+    color:#102a3a;
+
+    font-size:11px;
+    font-weight:850;
+
+    letter-spacing:.7px;
+
+    text-transform:uppercase;
 }
 
 .links {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 22px;
+    display:flex;
+
+    justify-content:center;
+
+    gap:10px;
+
+    flex-wrap:wrap;
 }
 
 .links a {
-    text-decoration: none;
-    color: var(--blue);
-    background: #eef5fb;
-    padding: 9px 14px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
+    padding:9px 18px;
+
+    background:#123f5b;
+
+    color:white;
+
+    border-radius:6px;
+
+    text-decoration:none;
+
+    font-size:11px;
+    font-weight:750;
+
+    transition:background .15s ease;
 }
+
+.links a:hover {
+    background:var(--teal);
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
 footer {
-    text-align: center;
-    color: var(--muted);
-    padding: 5px 20px 35px;
-    line-height: 1.7;
-    font-size: 14px;
+    padding:25px 20px;
+
+    text-align:center;
+
+    background:var(--navy-dark);
+
+    color:#a8c2cc;
+
+    font-size:12px;
+
+    line-height:1.7;
 }
 
-footer strong { color: var(--navy); }
+footer strong {
+    color:white;
 
-@media(max-width: 700px) {
-    .grid, .result-grid {
-        grid-template-columns: 1fr;
+    font-size:14px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:950px) {
+
+    .overview {
+        grid-template-columns:1fr;
     }
 
-    .card-header {
-        flex-direction: column;
+    .fields {
+        grid-template-columns:1fr 1fr;
     }
 
-    .tech {
-        justify-content: flex-start;
+    .result-grid {
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:650px) {
+
+    main {
+        width:calc(100% - 20px);
     }
 
-    .result-top {
-        align-items: flex-start;
-        flex-direction: column;
+    .hero {
+        padding:25px 15px 28px;
+    }
+
+    .vanier {
+        font-size:17px;
+
+        padding:11px 26px;
+    }
+
+    .hero h1 {
+        font-size:35px;
+    }
+
+    .subtitle {
+        font-size:17px;
+    }
+
+    .model-grid,
+    .fields,
+    .result-grid {
+        grid-template-columns:1fr;
+    }
+
+    .field {
+        grid-template-columns:52px 1fr;
+    }
+
+    .field-icon {
+        width:52px;
+        height:52px;
+    }
+
+    .panel {
+        padding:15px;
+    }
+
+    .result-cell {
+        border-right:none;
+
+        border-bottom:1px solid #477183;
     }
 }
 </style>
 </head>
 
+
 <body>
 
-<section class="hero">
-    <div class="hero-inner">
-        <div class="badge">VANIER COLLEGE · AI MODEL DEPLOYMENT</div>
+<!-- =======================================================
+     HERO
+     ======================================================= -->
 
-        <h1>Loan Default Risk Predictor</h1>
+<header class="hero">
 
-        <h2>Maple Ridge Credit Union — Prediction API Demo</h2>
-
-        <div class="author">
-            Final Project · <strong>Abdelhafid Masmi</strong>
-        </div>
+    <div class="vanier">
+        VANIER COLLEGE
     </div>
+
+    <h1>
+        Loan Default Risk Predictor
+    </h1>
+
+    <div class="subtitle">
+        Maple Ridge Credit Union · Prediction API
+    </div>
+
+    <div class="hero-divider"></div>
+
+    <div class="student">
+        Student <strong>Abdelhafid Masmi</strong>
+    </div>
+
+    <div class="program">
+        AI Model Deployment · Final Project ·
+        <strong>Summer 2026</strong>
+    </div>
+
+</header>
+
+
+<main>
+
+<!-- =======================================================
+     MODEL OVERVIEW
+     ======================================================= -->
+
+<section class="overview">
+
+    <div class="overview-main">
+
+        <div class="overview-icon">
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor">
+                <path d="M4 19V9M9 19V5M14 19v-7M19 19V3"/>
+                <path d="M2 19h20"/>
+            </svg>
+        </div>
+
+        <div>
+
+            <h2>
+                Machine Learning Risk Assessment
+            </h2>
+
+            <p>
+                This application uses a deployed machine learning
+                model to estimate the probability of loan default
+                from applicant information available at application time.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="model-grid">
+
+        <div class="model-card">
+
+            <div class="model-icon">
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor">
+
+                    <circle cx="12" cy="12" r="3"/>
+
+                    <path d="M19 12a7 7 0 0 0-.1-1
+                             l2-1.5-2-3.4-2.4 1
+                             a7 7 0 0 0-1.7-1
+                             L14.5 3h-5l-.4 3.1
+                             a7 7 0 0 0-1.7 1
+                             L5 6.1 3 9.5 5.1 11
+                             a7 7 0 0 0 0 2
+                             L3 14.5 5 18l2.4-1
+                             a7 7 0 0 0 1.7 1
+                             l.4 3h5l.4-3
+                             a7 7 0 0 0 1.7-1
+                             l2.4 1 2-3.5-2.1-1.5
+                             c.1-.3.1-.7.1-1z"/>
+                </svg>
+            </div>
+
+            <div>
+                <span>Model</span>
+                <strong>Logistic Regression</strong>
+            </div>
+
+        </div>
+
+
+        <div class="model-card">
+
+            <div class="model-icon">
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor">
+
+                    <circle cx="12" cy="12" r="8"/>
+                    <circle cx="12" cy="12" r="4"/>
+
+                </svg>
+            </div>
+
+            <div>
+                <span>Model Version</span>
+                <strong>Version 1</strong>
+            </div>
+
+        </div>
+
+
+        <div class="model-card">
+
+            <div class="model-icon">
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor">
+
+                    <path d="m8 6-6 6 6 6
+                             M16 6l6 6-6 6
+                             M14 3l-4 18"/>
+                </svg>
+            </div>
+
+            <div>
+                <span>API</span>
+                <strong>FastAPI</strong>
+            </div>
+
+        </div>
+
+
+        <div class="model-card">
+
+            <div class="model-icon">
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor">
+
+                    <path d="m12 2 8 4.5v11
+                             L12 22l-8-4.5v-11L12 2z"/>
+
+                    <path d="m4 6.5 8 4.5 8-4.5
+                             M12 11v11"/>
+                </svg>
+            </div>
+
+            <div>
+                <span>Deployment</span>
+                <strong>Docker</strong>
+            </div>
+
+        </div>
+
+    </div>
+
 </section>
 
-<main class="container">
-<div class="card">
 
-    <div class="card-header">
+<!-- =======================================================
+     APPLICANT INFORMATION
+     ======================================================= -->
+
+<section class="panel">
+
+    <div class="section-header">
+
+        <div class="section-number">
+            1
+        </div>
+
         <div>
-            <h3>Application Information</h3>
-            <p class="subtitle">
-                Enter applicant information available at application time
-                to estimate the probability of loan default.
+
+            <h2>
+                Applicant Information
+            </h2>
+
+            <p>
+                Enter applicant details to analyze the risk of loan default.
             </p>
+
         </div>
 
-        <div class="tech">
-            <span>MODEL v1</span>
-            <span>FASTAPI</span>
-            <span>DOCKER</span>
-            <span>LOGISTIC REGRESSION</span>
-        </div>
     </div>
 
-    <div class="grid">
+
+    <div class="fields">
+
+        <!-- EMPLOYMENT -->
 
         <div class="field">
-            <label for="employment_status">Employment Status</label>
+
+            <div class="field-icon">
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor">
+
+                    <rect x="3" y="7"
+                          width="18"
+                          height="12"
+                          rx="2"/>
+
+                    <path d="M8 7V5h8v2
+                             M3 11h18
+                             M10 11v2h4v-2"/>
+                </svg>
+            </div>
+
+            <label>
+                Employment Status
+            </label>
+
             <select id="employment_status">
-                <option value="employed">Employed</option>
-                <option value="self-employed">Self-employed</option>
-                <option value="retired">Retired</option>
-                <option value="unemployed">Unemployed</option>
+
+                <option value="employed">
+                    Employed
+                </option>
+
+                <option value="self-employed">
+                    Self-employed
+                </option>
+
+                <option value="retired">
+                    Retired
+                </option>
+
+                <option value="unemployed">
+                    Unemployed
+                </option>
+
             </select>
+
         </div>
 
-        <div class="field">
-            <label for="annual_income">Annual Income (CAD)</label>
-            <input id="annual_income" type="number" min="0" value="65000">
-        </div>
+
+        <!-- INCOME -->
 
         <div class="field">
-            <label for="credit_score">Credit Score <small>(300–850)</small></label>
-            <input id="credit_score" type="number" min="300" max="850" value="700">
+
+            <div class="field-icon">
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor">
+
+                    <ellipse cx="12"
+                             cy="6"
+                             rx="7"
+                             ry="3"/>
+
+                    <path d="M5 6v4
+                             c0 1.7 3.1 3 7 3
+                             s7-1.3 7-3V6"/>
+
+                    <path d="M5 10v4
+                             c0 1.7 3.1 3 7 3
+                             s7-1.3 7-3v-4"/>
+
+                    <path d="M5 14v4
+                             c0 1.7 3.1 3 7 3
+                             s7-1.3 7-3v-4"/>
+                </svg>
+            </div>
+
+            <label>
+                Annual Income
+                <small>(CAD)</small>
+            </label>
+
+            <input
+                id="annual_income"
+                type="number"
+                min="0"
+                value="65000"
+            >
+
         </div>
 
-        <div class="field">
-            <label for="debt_to_income_pct">Debt-to-Income (%)</label>
-            <input id="debt_to_income_pct" type="number" min="0" step="0.1" value="25">
-        </div>
+
+        <!-- CREDIT SCORE -->
 
         <div class="field">
-            <label for="home_ownership">Home Ownership</label>
+
+            <div class="field-icon">
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor">
+
+                    <path d="M4 17
+                             a8 8 0 1 1 16 0"/>
+
+                    <path d="m12 13 4-4"/>
+
+                    <circle cx="12"
+                            cy="13"
+                            r="1"/>
+
+                    <path d="M6 17h12"/>
+                </svg>
+            </div>
+
+            <label>
+                Credit Score
+                <small>(300–850)</small>
+            </label>
+
+            <input
+                id="credit_score"
+                type="number"
+                min="300"
+                max="850"
+                value="700"
+            >
+
+        </div>
+
+
+        <!-- DTI -->
+
+        <div class="field">
+
+            <div class="field-icon">
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor">
+
+                    <path d="M5 20v-6h3v6
+                             M11 20V9h3v11
+                             M17 20V4h3v16"/>
+
+                    <path d="M3 20h19"/>
+                </svg>
+            </div>
+
+            <label>
+                Debt-to-Income
+                <small>(%)</small>
+            </label>
+
+            <input
+                id="debt_to_income_pct"
+                type="number"
+                min="0"
+                step="0.1"
+                value="25"
+            >
+
+        </div>
+
+
+        <!-- HOME -->
+
+        <div class="field">
+
+            <div class="field-icon">
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor">
+
+                    <path d="m3 11 9-8 9 8"/>
+
+                    <path d="M5 10v11h14V10"/>
+
+                    <path d="M9 21v-7h6v7"/>
+                </svg>
+            </div>
+
+            <label>
+                Home Ownership
+            </label>
+
             <select id="home_ownership">
-                <option value="mortgage">Mortgage</option>
-                <option value="own">Own</option>
-                <option value="rent">Rent</option>
+
+                <option value="mortgage">
+                    Mortgage
+                </option>
+
+                <option value="own">
+                    Own
+                </option>
+
+                <option value="rent">
+                    Rent
+                </option>
+
             </select>
+
         </div>
 
+
+        <!-- PREVIOUS DEFAULTS -->
+
         <div class="field">
-            <label for="previous_defaults">Previous Defaults</label>
-            <input id="previous_defaults" type="number" min="0" value="0">
+
+            <div class="field-icon">
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor">
+
+                    <path d="M6 2h9l4 4v16H6z"/>
+
+                    <path d="M14 2v5h5
+                             M9 12h6
+                             M9 16h6"/>
+                </svg>
+            </div>
+
+            <label>
+                Previous Defaults
+            </label>
+
+            <input
+                id="previous_defaults"
+                type="number"
+                min="0"
+                value="0"
+            >
+
         </div>
 
     </div>
 
-    <button id="predictButton" onclick="predict()">Predict Loan Risk</button>
 
-    <section id="result">
-        <div class="result-top">
-            <div>
-                <span class="metric-label">MODEL RECOMMENDATION</span>
-                <div id="risk" class="risk"></div>
-            </div>
+    <button
+        id="predictButton"
+        class="predict"
+        onclick="predictRisk()"
+    >
+        Analyze Loan Risk →
+    </button>
 
-            <div>
-                <span class="metric-label">DEFAULT PROBABILITY</span>
-                <div id="prob" class="probability"></div>
-            </div>
+</section>
+
+
+<!-- =======================================================
+     RESULTS
+     ======================================================= -->
+
+<section
+    id="resultSection"
+    class="result-panel"
+>
+
+    <div class="section-header">
+
+        <div class="section-number">
+            2
         </div>
 
-        <div class="result-grid">
-            <div class="metric">
-                <span class="metric-label">Operating threshold</span>
-                <span id="threshold" class="metric-value"></span>
-            </div>
+        <div>
 
-            <div class="metric">
-                <span class="metric-label">Model version</span>
-                <span id="version" class="metric-value"></span>
-            </div>
+            <h2>
+                Risk Assessment
+            </h2>
 
-            <div class="metric">
-                <span class="metric-label">Request ID</span>
-                <span id="request" class="metric-value"></span>
-            </div>
+            <p>
+                Model prediction based on the provided information.
+            </p>
+
         </div>
 
-        <div class="notice">
-            Demonstration decision-support system. The prediction is a model
-            estimate and should not be treated as an automatic lending decision.
+    </div>
+
+
+    <div class="result-grid">
+
+        <div class="result-cell">
+
+            <div class="result-label">
+                Model Prediction
+            </div>
+
+            <div id="risk">
+                LOW RISK
+            </div>
+
         </div>
-    </section>
+
+
+        <div class="result-cell">
+
+            <div class="result-label">
+                Default Probability
+            </div>
+
+            <div id="probability">
+                0.0%
+            </div>
+
+        </div>
+
+
+        <div class="result-cell">
+
+            <div class="result-label">
+                Operating Threshold
+            </div>
+
+            <div
+                id="threshold"
+                class="result-value"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="result-cell">
+
+            <div class="result-label">
+                Model Version
+            </div>
+
+            <div
+                id="version"
+                class="result-value"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="result-cell">
+
+            <div class="result-label">
+                Request ID
+            </div>
+
+            <div
+                id="request"
+                class="request"
+            >
+                —
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="thresholdMessage"
+        class="message"
+    ></div>
+
+</section>
+
+
+<!-- =======================================================
+     TECHNICAL LINKS
+     ======================================================= -->
+
+<section class="technical">
+
+    <div class="technical-title">
+        Technical Resources
+    </div>
 
     <div class="links">
-        <a href="/docs" target="_blank">API Documentation</a>
-        <a href="/health" target="_blank">Service Health</a>
-        <a href="/version" target="_blank">Model Version</a>
+
+        <a
+            href="/docs"
+            target="_blank"
+        >
+            API Documentation
+        </a>
+
+        <a
+            href="/health"
+            target="_blank"
+        >
+            Service Health
+        </a>
+
+        <a
+            href="/version"
+            target="_blank"
+        >
+            Model Version
+        </a>
+
     </div>
 
-</div>
+</section>
+
 </main>
 
+
 <footer>
-    <strong>Abdelhafid Masmi</strong><br>
-    Vanier College · AI Model Deployment · Final Project
+
+    <strong>
+        Abdelhafid Masmi
+    </strong>
+
+    <br>
+
+    Vanier College ·
+    AI Model Deployment ·
+    Final Project ·
+    Summer 2026
+
 </footer>
 
+
 <script>
-async function predict() {
-    const button = document.getElementById("predictButton");
-    const result = document.getElementById("result");
-    const risk = document.getElementById("risk");
+
+async function predictRisk() {
+
+    const button =
+        document.getElementById("predictButton");
 
     const payload = {
+
         employment_status:
-            document.getElementById("employment_status").value,
+            document
+            .getElementById("employment_status")
+            .value,
 
         annual_income:
-            Number(document.getElementById("annual_income").value),
+            Number(
+                document
+                .getElementById("annual_income")
+                .value
+            ),
 
         credit_score:
-            Number(document.getElementById("credit_score").value),
+            Number(
+                document
+                .getElementById("credit_score")
+                .value
+            ),
 
         debt_to_income_pct:
-            Number(document.getElementById("debt_to_income_pct").value),
+            Number(
+                document
+                .getElementById("debt_to_income_pct")
+                .value
+            ),
 
         home_ownership:
-            document.getElementById("home_ownership").value,
+            document
+            .getElementById("home_ownership")
+            .value,
 
         previous_defaults:
-            Number(document.getElementById("previous_defaults").value)
+            Number(
+                document
+                .getElementById("previous_defaults")
+                .value
+            )
     };
 
+
     button.disabled = true;
-    button.textContent = "Calculating risk...";
+
+    button.textContent =
+        "Analyzing Application...";
+
 
     try {
-        const response = await fetch("/predict", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        });
 
-        const data = await response.json();
+        const response =
+            await fetch(
+                "/predict",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(payload)
+                }
+            );
+
+
+        const data =
+            await response.json();
+
 
         if (!response.ok) {
+
             throw new Error(
                 data.detail
-                ? JSON.stringify(data.detail)
-                : "Prediction request failed"
+                    ? JSON.stringify(data.detail)
+                    : "Prediction failed"
             );
         }
 
-        result.style.display = "block";
+
+        const probability =
+            Number(
+                data.default_probability
+            );
+
+
+        const threshold =
+            Number(
+                data.threshold_used
+            );
+
 
         const highRisk =
-            data.default_prediction === "high-risk";
+            data.default_prediction
+            === "high-risk";
+
+
+        const risk =
+            document.getElementById("risk");
+
 
         risk.textContent =
-            highRisk ? "HIGH RISK" : "LOW RISK";
+            highRisk
+                ? "HIGH RISK"
+                : "LOW RISK";
+
 
         risk.className =
-            "risk " + (highRisk ? "high" : "low");
+            highRisk
+                ? "high-risk"
+                : "low-risk";
 
-        document.getElementById("prob").textContent =
-            (data.default_probability * 100).toFixed(1) + "%";
 
-        document.getElementById("threshold").textContent =
-            Number(data.threshold_used).toFixed(3);
+        document
+        .getElementById("probability")
+        .textContent =
+            (probability * 100)
+            .toFixed(1)
+            + "%";
 
-        document.getElementById("version").textContent =
+
+        document
+        .getElementById("threshold")
+        .textContent =
+            (threshold * 100)
+            .toFixed(1)
+            + "%";
+
+
+        document
+        .getElementById("version")
+        .textContent =
             "v" + data.model_version;
 
-        document.getElementById("request").textContent =
+
+        document
+        .getElementById("request")
+        .textContent =
             data.request_id;
 
+
+        document
+        .getElementById("thresholdMessage")
+        .textContent =
+            highRisk
+
+            ? "The estimated probability is above the operating threshold. The model flags this application as higher risk."
+
+            : "The estimated probability is below the operating threshold. The model classifies this application as lower risk.";
+
+
+        const result =
+            document
+            .getElementById("resultSection");
+
+
+        result.style.display =
+            "block";
+
+
         result.scrollIntoView({
-            behavior: "smooth",
-            block: "nearest"
+            behavior:"smooth",
+            block:"center"
         });
 
-    } catch (error) {
-        result.style.display = "block";
+    }
 
-        risk.textContent = "Prediction Error";
-        risk.className = "risk high";
+    catch(error) {
 
-        document.getElementById("prob").textContent = "—";
-        document.getElementById("threshold").textContent = "—";
-        document.getElementById("version").textContent = "—";
-        document.getElementById("request").textContent =
-            error.message;
+        alert(
+            "Prediction error: "
+            + error.message
+        );
 
-    } finally {
+    }
+
+    finally {
+
         button.disabled = false;
-        button.textContent = "Predict Loan Risk";
+
+        button.textContent =
+            "Analyze Loan Risk →";
     }
 }
+
 </script>
 
 </body>
