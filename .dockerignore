@@ -1,0 +1,36 @@
+# No secrets
+.env
+.env.*
+!.env.example
+
+# No client data
+data/
+
+# No notebooks
+notebooks/
+
+# No tests
+tests/
+
+# No report or submission material
+report/
+postman/
+RUN-COMMANDS.md
+README.md
+readme.txt
+benchmark.py
+check_submission.py
+
+# Python/cache/local files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.git/
+.gitignore
+
+# Local environments
+venv/
+.venv/
+env/
+.conda/

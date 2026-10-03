@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "trained_on": "2026-09-29",
+  "sklearn_version": "1.7.2",
+  "features": [
+    "employment_status",
+    "annual_income",
+    "credit_score",
+    "debt_to_income_pct",
+    "home_ownership",
+    "previous_defaults"
+  ],
+  "operating_threshold": 0.24638885712564745,
+  "threshold_policy": "At most 30% of new applications may be flagged for manual review.",
+  "validation_metrics": {
+    "flagged_rate": 0.2998,
+    "precision": 0.46497665110073383,
+    "recall": 0.6928429423459245,
+    "accuracy": 0.7778
+  },
+  "final_test_metrics": {
+    "flagged_rate": 0.2862,
+    "precision": 0.4919636617749825,
+    "recall": 0.6998011928429424,
+    "accuracy": 0.7942
+  }
+}

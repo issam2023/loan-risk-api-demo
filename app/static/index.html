@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loan Default Risk Predictor</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+}
+
+header {
+    background: linear-gradient(135deg, #173b67, #245d91);
+    color: white;
+    padding: 38px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0 0 10px;
+    font-size: 34px;
+}
+
+header p {
+    margin: 0;
+    opacity: .9;
+}
+
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: 0 5px 22px rgba(0,0,0,.08);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd4df;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+button {
+    width: 100%;
+    margin-top: 24px;
+    padding: 14px;
+    border: 0;
+    border-radius: 8px;
+    background: #173b67;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #245d91;
+}
+
+#result {
+    display: none;
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 10px;
+    background: #eef4fa;
+}
+
+.risk {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.low { color: #18794e; }
+.high { color: #b42318; }
+
+.metric {
+    margin: 7px 0;
+}
+
+.links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.links a {
+    margin: 0 10px;
+    color: #173b67;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #667085;
+    font-size: 14px;
+}
+
+@media(max-width: 650px) {
+    .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Loan Default Risk Predictor</h1>
+<p>AI Model Deployment Demo · Maple Ridge Credit Union</p>
+</header>
+
+<div class="container">
+<div class="card">
+
+<h2>Application Information</h2>
+<p>Enter the applicant information available at application time.</p>
+
+<div class="grid">
+
+<div>
+<label>Employment Status</label>
+<select id="employment_status">
+<option value="employed">Employed</option>
+<option value="self-employed">Self-employed</option>
+<option value="retired">Retired</option>
+<option value="unemployed">Unemployed</option>
+</select>
+</div>
+
+<div>
+<label>Annual Income (CAD)</label>
+<input id="annual_income" type="number" value="65000">
+</div>
+
+<div>
+<label>Credit Score</label>
+<input id="credit_score" type="number" min="300" max="850" value="700">
+</div>
+
+<div>
+<label>Debt-to-Income (%)</label>
+<input id="debt_to_income_pct" type="number" step="0.1" value="25">
+</div>
+
+<div>
+<label>Home Ownership</label>
+<select id="home_ownership">
+<option value="mortgage">Mortgage</option>
+<option value="own">Own</option>
+<option value="rent">Rent</option>
+</select>
+</div>
+
+<div>
+<label>Previous Defaults</label>
+<input id="previous_defaults" type="number" min="0" value="0">
+</div>
+
+</div>
+
+<button onclick="predict()">Predict Risk</button>
+
+<div id="result">
+<div id="risk" class="risk"></div>
+<div class="metric"><b>Default probability:</b> <span id="prob"></span></div>
+<div class="metric"><b>Operating threshold:</b> <span id="threshold"></span></div>
+<div class="metric"><b>Model version:</b> <span id="version"></span></div>
+<div class="metric"><b>Request ID:</b> <span id="request"></span></div>
+</div>
+
+<div class="links">
+<a href="/docs" target="_blank">API Documentation</a>
+<a href="/health" target="_blank">Health Check</a>
+</div>
+
+</div>
+</div>
+
+<footer>
+AI Model Deployment Final Project · Abdelhafid Masmi
+</footer>
+
+<script>
+async function predict() {
+
+    const result = document.getElementById("result");
+    const risk = document.getElementById("risk");
+
+    const payload = {
+        employment_status: document.getElementById("employment_status").value,
+        annual_income: Number(document.getElementById("annual_income").value),
+        credit_score: Number(document.getElementById("credit_score").value),
+        debt_to_income_pct: Number(document.getElementById("debt_to_income_pct").value),
+        home_ownership: document.getElementById("home_ownership").value,
+        previous_defaults: Number(document.getElementById("previous_defaults").value)
+    };
+
+    try {
+        const response = await fetch("/predict", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(JSON.stringify(data));
+        }
+
+        result.style.display = "block";
+
+        risk.textContent =
+            data.default_prediction === "high-risk"
+            ? "HIGH RISK"
+            : "LOW RISK";
+
+        risk.className =
+            "risk " +
+            (data.default_prediction === "high-risk" ? "high" : "low");
+
+        document.getElementById("prob").textContent =
+            (data.default_probability * 100).toFixed(1) + "%";
+
+        document.getElementById("threshold").textContent =
+            Number(data.threshold_used).toFixed(3);
+
+        document.getElementById("version").textContent =
+            data.model_version;
+
+        document.getElementById("request").textContent =
+            data.request_id;
+
+    } catch (error) {
+        result.style.display = "block";
+        risk.className = "risk high";
+        risk.textContent = "Prediction error";
+        document.getElementById("prob").textContent = error.message;
+        document.getElementById("threshold").textContent = "-";
+        document.getElementById("version").textContent = "-";
+        document.getElementById("request").textContent = "-";
+    }
+}
+</script>
+
+</body>
+</html>
